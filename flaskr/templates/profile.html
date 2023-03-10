@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %} Profile {% endblock %}
+
+{% block content %}
+<h1>Profile</h1>
+<p>User ID: {{ p["id"] }}</p>
+<p>Username: {{ p["username"] }}</p>
+<p>Password: {{ p["password"] }}</p>
+<p>Phone Number: {{ p["phone_number"] }}</p>
+<p>Account Type: {{ p["account_type"] }}</p>
+{% endblock %}

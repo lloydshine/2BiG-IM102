@@ -1,0 +1,65 @@
+{% extends 'auth/auth.html' %}
+
+{% block form %}
+<div class="row">
+    <div class="col-md-6">
+        <img src="https://picsum.photos/600/400" alt="random image">
+    </div>
+    <div class="col-md-6">
+        <h2>Register</h2>
+        <form method="post">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input
+                        class="form-control"
+                        id="username"
+                        type="text"
+                        name="username"
+                        placeholder="Username"
+                        required
+                />
+            </div>
+            <div class="form-group">
+                <label for="username">Password: </label>
+                <input
+                        class="form-control"
+                        id="password"
+                        type="text"
+                        name="password"
+                        placeholder="Password"
+                        required
+                />
+            </div>
+            <div class="form-group">
+                <label for="username">Retype Password:</label>
+                <input
+                        class="form-control"
+                        id="password2"
+                        type="text"
+                        name="password2"
+                        placeholder="Retype Password"
+                        required
+                />
+            </div>
+            <div class="form-group">
+                <label for="username">Phone Number:</label>
+                <input
+                        class="form-control"
+                        id="phone_number"
+                        type="text"
+                        name="phone_number"
+                        placeholder="Phone Number"
+                        required
+                />
+            </div>
+            <input
+                    type="hidden"
+                    name="account_type"
+                    value="customer"
+            />
+            <input type="submit"  class="btn btn-primary" value="Register">
+        </form>
+    </div>
+</div>
+{% endblock %}
+

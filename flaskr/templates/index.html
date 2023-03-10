@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block title %} Dash Board {% endblock %}
+
+{% block adminview %}
+{% if g.user.account_type == "admin" %}
+ <br />
+<br />
+  <br />
+<br />
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="card bg-primary text-white">
+        <div class="card-body">
+          <h5 class="card-title">Total Income</h5>
+          <p class="card-text">$10,000</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card bg-success text-white">
+        <div class="card-body">
+          <h5 class="card-title">Products Sold</h5>
+          <p class="card-text">500</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card bg-danger text-white">
+        <div class="card-body">
+          <h5 class="card-title">Total Deliveries</h5>
+          <p class="card-text">250</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+ <br />
+<br />
+  <br />
+<br />
+{% endif %}
+{% endblock %}
+
+{% block intro %}
+<div class="container-fluid p-0">
+  <div class="row no-gutters">
+    <div class="col-12">
+        <img src="{{ url_for('static', filename='images/Image.jpg') }}" alt="Placeholder Image" class="img-fluid">
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+  <br />
+<br />
+  <br />
+<br />
+  <div class="card">
+  <h5 class="card-header" style="background-color: #0D7ADE; color: white;">What is 2BiG?</h5>
+  <div class="card-body">
+    <h5 class="card-title">2BiG</h5>
+    <p class="card-text">2BiG is a web-based platform that allows customers to place orders for water delivery, manage their account information, and track their deliveries. The system streamlines the ordering process, providing customers with a convenient and efficient way to manage their water needs. It also enables delivery providers to manage their deliveries and ensure timely and accurate service. The water ordering system typically includes features such as a user-friendly interface, order processing, payment processing, delivery tracking, and
+customer account management.</p>
+    <a href="{{ url_for('auth.register') }}" class="btn btn-primary">Register Now!</a>
+  </div>
+</div>
+  <br />
+<br />
+  <br />
+<br />
+{% endblock %}
