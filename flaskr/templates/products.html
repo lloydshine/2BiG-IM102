@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block modal %}
+<!-- Add Product Modal -->
+{% if g.user.account_type == "admin" %}
+<!-- Modal -->
+<div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="ProductModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+<div class="modal-content">
+</div>
+    </div>
+</div>
+<script>
+    function previewImage(event) {
+  var image = document.getElementById('productImagePreview');
+  image.style.display = "block";
+  image.src = URL.createObjectURL(event.target.files[0]);
+}
+</script>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<br>
+<h3>Products</h3>
+<br>
+{% if g.user.account_type == "admin" %}
+<br> <br>
+<button type="button" class="btn btn-primary" onclick="openProductAddModal()">Add Product</button>
+<br> <br>
+{% endif %}
+<div class="row">
+    {% for product in products %}
+    <div class="col-sm-4 mb-3">
+        <div class="card" style="border-radius: 30px; overflow: hidden;">
+            <img src="{{ url_for('static', filename='uploads/' + product.image_filename) }}"
+                 class="card-img-top img-fluid rounded mx-auto d-block" style="height: 200px; object-fit: contain;"
+                 alt="{{ product.name }}">
+            <div class="card-body" style="background-color: #0D7ADE; color: white;">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p class="card-text"><span class="font-weight-bold">Description: </span>{{ product.description }}</p>
+                <p class="card-text"><span class="font-weight-bold">Price: </span>Php{{ product.price }}</p>
+                {% if g.user.account_type == "admin" %}
+                <button class="btn btn-danger" data-id='{{ product.id }}' onclick="openProductEditModal({{ product.id }})">Edit</button>
+                {% else %}
+                <a href="#" class="btn btn-success">Buy</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{{ url_for('static', filename='modal.js') }}"></script>
+{% endblock %}

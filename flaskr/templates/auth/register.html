@@ -1,65 +1,56 @@
 {% extends 'auth/auth.html' %}
 
 {% block form %}
-<div class="row">
+<div class="d-flex align-items-center">
     <div class="col-md-6">
-        <img src="https://picsum.photos/600/400" alt="random image">
+        <img src="https://picsum.photos/600/400" alt="random image" class="img-fluid">
     </div>
     <div class="col-md-6">
         <h2>Register</h2>
         <form method="post">
-            <div class="form-group">
-                <label for="username">Username:</label>
-                <input
-                        class="form-control"
-                        id="username"
-                        type="text"
-                        name="username"
-                        placeholder="Username"
-                        required
-                />
+            <div class="form-group row">
+                <label for="username" class="col-sm-4 col-form-label">Username:</label>
+                <div class="col-sm-8">
+                    <input class="form-control" id="username" type="text" name="username" placeholder="Username" required>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="username">Password: </label>
-                <input
-                        class="form-control"
-                        id="password"
-                        type="text"
-                        name="password"
-                        placeholder="Password"
-                        required
-                />
+            <div class="form-group row">
+                <label for="fullname" class="col-sm-4 col-form-label">Full Name:</label>
+                <div class="col-sm-8">
+                    <input class="form-control" id="fullname" type="text" name="fullname" placeholder="Enter Full Name" required>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="username">Retype Password:</label>
-                <input
-                        class="form-control"
-                        id="password2"
-                        type="text"
-                        name="password2"
-                        placeholder="Retype Password"
-                        required
-                />
+            <div class="form-group row">
+                <label for="password" class="col-sm-4 col-form-label">Password:</label>
+                <div class="col-sm-8">
+                    <input class="form-control" id="password" type="password" name="password" placeholder="Password" required>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="username">Phone Number:</label>
-                <input
-                        class="form-control"
-                        id="phone_number"
-                        type="text"
-                        name="phone_number"
-                        placeholder="Phone Number"
-                        required
-                />
+            <div class="form-group row">
+                <label for="password2" class="col-sm-4 col-form-label">Retype Password:</label>
+                <div class="col-sm-8">
+                    <input class="form-control" id="password2" type="password" name="password2" placeholder="Retype Password" required>
+                </div>
             </div>
-            <input
-                    type="hidden"
-                    name="account_type"
-                    value="customer"
-            />
-            <input type="submit"  class="btn btn-primary" value="Register">
+            <div class="form-group row">
+                <label for="address" class="col-sm-4 col-form-label">Address:</label>
+                <div class="col-sm-8">
+                    <input class="form-control" id="address" type="text" name="address" placeholder="Enter Address" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="phone_number" class="col-sm-4 col-form-label">Phone Number:</label>
+                <div class="col-sm-8">
+                    <input class="form-control" id="phone_number" type="tel" name="phone_number" placeholder="Phone Number" required>
+                </div>
+            </div>
+            <input type="hidden" name="account_type" value="customer">
+            <div class="form-group row text-center">
+                <div class="col-sm-12">
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </div>
+            </div>
         </form>
     </div>
 </div>
 {% endblock %}
-

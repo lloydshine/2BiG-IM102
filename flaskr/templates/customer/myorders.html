@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block title %}My Orders{% endblock %}
+
+{% block content %}
+
+<style>
+  .badge {
+    width: 100px;
+    padding: 10px;
+  }
+  .container {
+    padding: 50px;
+  }
+  .pagination {
+    margin-top: 20px;
+    justify-content: center;
+  }
+</style>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6">
+      <h2>My Orders</h2>
+    </div>
+    <div class="col-sm-6">
+      <form class="form-inline float-right">
+        <input class="form-control mr-sm-2" type="text" placeholder="Search">
+        <button class="btn btn-primary" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Date Ordered</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>123456</td>
+        <td>Product 1</td>
+        <td>2</td>
+        <td>2022-03-13</td>
+        <td><span class="badge badge-primary">Processing</span></td>
+      </tr>
+      <tr>
+        <td>123457</td>
+        <td>Product 2</td>
+        <td>1</td>
+        <td>2022-03-12</td>
+        <td><span class="badge badge-primary">Shipped</span></td>
+      </tr>
+      <tr>
+        <td>123458</td>
+        <td>Product 3</td>
+        <td>3</td>
+        <td>2022-03-11</td>
+        <td><span class="badge badge-success">Delivered</span></td>
+      </tr>
+      <tr>
+        <td>123459</td>
+        <td>Product 4</td>
+        <td>1</td>
+        <td>2022-03-10</td>
+        <td><span class="badge badge-danger">Cancelled</span></td>
+      </tr>
+    </tbody>
+  </table>
+  <nav>
+    <ul class="pagination">
+      <li class="page-item disabled">
+        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+      </li>
+      <li class="page-item active" aria-current="page">
+        <a class="page-link" href="#">1</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="#">2</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="#">3</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="#">Next</a>
+      </li>
+    </ul>
+  </nav>
+</div>
+{% endblock %}

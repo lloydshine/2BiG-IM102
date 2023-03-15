@@ -14,6 +14,15 @@ from flaskr.db import get_db
 bp = Blueprint("auth", __name__, url_prefix="/auth")
 
 
+def customer_required(view):
+    @functools.wraps(view)
+    def wrapped_view(**kwargs):
+        if g.user is None:
+            return redirect(url_for("index"))
+        return view(**kwargs)
+
+    return wrapped_view
+
 def login_required(view):
     """View decorator that redirects anonymous users to the login page."""
 
@@ -52,6 +61,8 @@ def register():
         username = request.form["username"]
         password = request.form["password"]
         password2 = request.form["password2"]
+        fullname = request.form["fullname"]
+        address = request.form["address"]
         phone_number = request.form["phone_number"]
         account_type = request.form["account_type"]
         db = get_db()
@@ -69,8 +80,8 @@ def register():
         if error is None:
             try:
                 db.execute(
-                    "INSERT INTO users (username,password,phone_number,account_type) VALUES (?,?,?,?)",
-                    (username, password,phone_number,account_type),
+                    "INSERT INTO users (username,password,phone_number,fullname,address,account_type) VALUES (?,?,?,?,?,?)",
+                    (username, password,phone_number,fullname,address,account_type),
                 )
                 db.commit()
             except db.IntegrityError:

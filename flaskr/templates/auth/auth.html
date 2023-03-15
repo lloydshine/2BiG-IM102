@@ -23,20 +23,27 @@
       margin-bottom: 20px;
     }
 
+
     </style>
 </head>
 <body>
 
 
 <div class="d-flex justify-content-center">
-  <a class="navbar-brand" href="{{ url_for('index') }}">
-    <img style="width: 100px; height 50px;" id="logo" src="{{ url_for('static', filename='images/2Big-Icon.png') }}" alt="App Logo"/>
-  </a>
+    <a class="navbar-brand" href="{{ url_for('index') }}">
+        <img style="width: 100px; height 50px;" id="logo" src="{{ url_for('static', filename='images/2Big-Icon.png') }}"
+             alt="App Logo"/>
+    </a>
 </div>
 
 
 <div class="container">
     {% block form %} {% endblock %}
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-secondary" role="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

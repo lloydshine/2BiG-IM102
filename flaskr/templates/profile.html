@@ -1,11 +1,87 @@
 {% extends 'base.html' %}
-{% block title %} Profile {% endblock %}
+
+{% block title %}Profile{% endblock %}
 
 {% block content %}
-<h1>Profile</h1>
-<p>User ID: {{ p["id"] }}</p>
-<p>Username: {{ p["username"] }}</p>
-<p>Password: {{ p["password"] }}</p>
-<p>Phone Number: {{ p["phone_number"] }}</p>
-<p>Account Type: {{ p["account_type"] }}</p>
+<br>
+<h3>Profile</h3>
+<br>
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+                         class="rounded-circle img-fluid" style="width: 150px;">
+                    <h5 class="my-3">{{ p.fullname }}</h5>
+                    <p class="text-muted mb-1">{{ p.account_type }}</p>
+                </div>
+            </div>
+            <div class="card mb-4 mb-lg-0">
+                <div class="card-body p-0">
+                    <ul class="list-group list-group-flush rounded-3">
+                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                            <i class="fab fa-facebook-f fa-lg" style="color: #3b5998;"></i>
+                            <p class="mb-0">mdbootstrap</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p class="mb-0">Full Name</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0">{{ p.fullname }}</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p class="mb-0">Username</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0">{{ p.username }}</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p class="mb-0">Phone</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0">{{ p.phone_number }}</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p class="mb-0">Address</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0">{{ p.address }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% if g.user.id == p.id %}
+            <div class="row">
+                <div class="col-sm-12 d-flex justify-content-center">
+                    <button type="button" class="btn btn-danger mr-2" data-toggle="modal"
+                            data-target="#deleteAccountModal">
+                        Delete Account
+                    </button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editAccountModal">
+                        Edit Account
+                    </button>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
 {% endblock %}

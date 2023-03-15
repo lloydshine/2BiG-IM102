@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+{% block title %} Admin - Dash Board {% endblock %}
+
+{% block content %}
+<br>
+<h3>Admin Dashboard</h3>
+<br>
+<div class="row">
+  <div class="col-sm-4">
+    <div class="card text-white bg-success mb-3">
+      <div class="card-header">This Month's Earning</div>
+      <div class="card-body">
+        <h5 class="card-title">$10,000</h5>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="card text-white bg-info mb-3">
+      <div class="card-header">Product Sold</div>
+      <div class="card-body">
+        <h5 class="card-title">500</h5>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="card text-white bg-warning mb-3">
+      <div class="card-header">Total Orders</div>
+      <div class="card-body">
+        <h5 class="card-title">1000</h5>
+      </div>
+    </div>
+  </div>
+</div>
+<hr class="hr" />
+<section class="most-popular-section">
+  <div class="container">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <h2>Most Popular Products</h2>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Ranking</th>
+                  <th>Product</th>
+                  <th>Total Orders</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td><a href="#">Product 1</a></td>
+                  <td>100</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td><a href="#">Product 2</a></td>
+                  <td>80</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td><a href="#">Product 3</a></td>
+                  <td>60</td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td><a href="#">Product 4</a></td>
+                  <td>40</td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td><a href="#">Product 5</a></td>
+                  <td>20</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-md-6">
+            <h2>Most Deliveries</h2>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Ranking</th>
+                  <th>Worker</th>
+                  <th>Total Deliveries</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td><a href="#">Worker 1</a></td>
+                  <td>50</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td><a href="#">Worker 2</a></td>
+                  <td>40</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td><a href="#">Worker 3</a></td>
+                  <td>30</td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td><a href="#">Worker 4</a></td>
+                  <td>20</td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td><a href="#">Worker 5</a></td>
+                  <td>10</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="hr" />
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="d-flex justify-content-between mb-3">
+        <h2>Workers Table</h2>
+        <button class="btn btn-primary">Add Worker</button>
+      </div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Full Name</th>
+            <th>Address</th>
+            <th>Phone Number</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>John Smith</td>
+            <td>123 Main St</td>
+            <td>555-555-1212</td>
+            <td>
+              <button class="btn btn-sm btn-primary">Edit</button>
+              <button class="btn btn-sm btn-danger">Remove</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Jane Doe</td>
+            <td>456 Maple Ave</td>
+            <td>555-555-1234</td>
+            <td>
+              <button class="btn btn-sm btn-primary">Edit</button>
+              <button class="btn btn-sm btn-danger">Remove</button>
+            </td>
+          </tr>
+          <!-- additional rows as needed -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock %}
