@@ -1,13 +1,14 @@
 from flask import Blueprint
 from flask import g
 from flask import render_template
-from flaskr.templates.auth.auth import customer_required
 from flaskr.db import get_db
+from flaskr.templates.auth.auth import account_type_required, login_required
 
 bp = Blueprint("customer", __name__)
 
 @bp.route('/myorders')
-@customer_required
+@login_required
+@account_type_required('customer')
 def myorders():
     # Open a connection to the database
 

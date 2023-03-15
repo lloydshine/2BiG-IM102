@@ -8,6 +8,7 @@ from flask import current_app
 from werkzeug.utils import secure_filename
 import os
 from flaskr.db import get_db
+from flaskr.templates.auth.auth import account_type_required, login_required
 
 bp = Blueprint("admin", __name__)
 
@@ -21,14 +22,14 @@ def allowed_file(filename):
 
 
 @bp.route('/add_product', methods=['POST', 'GET'])
+@login_required
+@account_type_required('admin')
 def add_product():
     if request.method == 'POST':
         product_name = request.form['name']
         product_description = request.form['description']
         product_price = request.form['price']
         image_file = request.files['image']
-
-        applog = "Error"
 
         # Check if the image file is allowed
         if image_file and allowed_file(image_file.filename):
@@ -41,7 +42,7 @@ def add_product():
             db.execute('INSERT INTO products (name, description, price, image_filename) VALUES (?, ?, ?, ?)',
                        (product_name, product_description, product_price, filename))
             db.commit()
-            applog = "Added new product";
+            applog = "Added new product"
             flash(applog)
             return redirect(url_for('wos.products'))
     # Render the add product form if the request method is not POST or the image file is not allowed
@@ -49,6 +50,8 @@ def add_product():
 
 
 @bp.route('/edit_product/<int:product_id>', methods=['POST', 'GET'])
+@login_required
+@account_type_required('admin')
 def edit_product(product_id):
     p = (
         get_db().execute("SELECT * FROM products WHERE id = ?", (product_id,)).fetchone()
@@ -57,6 +60,8 @@ def edit_product(product_id):
 
 
 @bp.route('/product', methods=['POST'])
+@login_required
+@account_type_required('admin')
 def product():
     if 'delete' in request.form:
         product_id = request.form['productID']

@@ -14,14 +14,15 @@ from flaskr.db import get_db
 bp = Blueprint("auth", __name__, url_prefix="/auth")
 
 
-def customer_required(view):
-    @functools.wraps(view)
-    def wrapped_view(**kwargs):
-        if g.user is None:
-            return redirect(url_for("index"))
-        return view(**kwargs)
-
-    return wrapped_view
+def account_type_required(account_type):
+    def decorator(view):
+        @functools.wraps(view)
+        def wrapped_view(**kwargs):
+            if g.user["account_type"] != account_type:
+                return redirect(url_for("index"))
+            return view(**kwargs)
+        return wrapped_view
+    return decorator
 
 def login_required(view):
     """View decorator that redirects anonymous users to the login page."""
