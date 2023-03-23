@@ -29,3 +29,20 @@ function openProductEditModal(id) {
     }
   });
 }
+
+function openOrderModal(id) {
+  console.log("Clicked")
+  // Make AJAX request to Flask route to get modal HTML
+  $j.ajax({
+    url: '/order/'+id,
+    type: 'GET',
+    data: {productid: id},
+    success: function(data) {
+      // Populate modal content with returned HTML
+      $('#productModal .modal-content').html(data);
+      $('#productModal .modal-content').append(data.htmlresponse);
+      // Show modal
+      $('#productModal').modal('show');
+    }
+  });
+}

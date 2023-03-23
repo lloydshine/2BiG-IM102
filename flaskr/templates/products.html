@@ -2,7 +2,6 @@
 
 {% block modal %}
 <!-- Add Product Modal -->
-{% if g.user.account_type == "admin" %}
 <!-- Modal -->
 <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="ProductModalLabel"
      aria-hidden="true">
@@ -18,7 +17,6 @@
   image.src = URL.createObjectURL(event.target.files[0]);
 }
 </script>
-{% endif %}
 {% endblock %}
 
 {% block content %}
@@ -43,8 +41,8 @@
                 <p class="card-text"><span class="font-weight-bold">Price: </span>Php{{ product.price }}</p>
                 {% if g.user.account_type == "admin" %}
                 <button class="btn btn-danger" data-id='{{ product.id }}' onclick="openProductEditModal({{ product.id }})">Edit</button>
-                {% else %}
-                <a href="#" class="btn btn-success">Buy</a>
+                {% elif g.user.account_type == "customer" %}
+                 <button class="btn btn-success" data-id='{{ product.id }}' onclick="openOrderModal({{ product.id }})">Order</button>
                 {% endif %}
             </div>
         </div>

@@ -1,0 +1,41 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="addProductModalLabel">Order</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <!-- Product View Column -->
+        <div class="col-md-6">
+            <div class="form-group">
+                <img src="{{ url_for('static', filename='uploads/' + p.image_filename) }}" alt="{{ p.name }}"
+                     class="img-fluid">
+            </div>
+            <div class="form-group">
+                <h2>{{ p.name }}</h2>
+                <p>{{ p.description }}</p>
+                <p>Price: ${{ p.price }}</p>
+            </div>
+        </div>
+        <!-- Order Form Column -->
+        <div class="col-md-6">
+            <form id="saveProductForm" method="POST" action="#" enctype="multipart/form-data">
+                <!-- Name Field -->
+                <div class="form-group">
+                    <label for="quantity">Quantity</label>
+                    <input type="number" class="form-control" id="quantity" name="quantity" required>
+                </div>
+                <!-- Description Field -->
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" name="order">Order</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

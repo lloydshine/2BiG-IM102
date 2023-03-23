@@ -63,31 +63,34 @@ def edit_product(product_id):
 @login_required
 @account_type_required('admin')
 def product():
+    product_id = request.form['productID']
+    db = get_db()
+
     if 'delete' in request.form:
-        product_id = request.form['productID']
-        db = get_db()
+        # Get the product image file name from database
+        image_filename = db.execute("SELECT image_filename FROM products WHERE id=?", (product_id,)).fetchone()[0]
+
+        # Delete the image file from the static/uploads folder
+        os.remove(os.path.join(current_app.config['UPLOAD_FOLDER'], image_filename))
         db.execute("DELETE FROM products WHERE id = ?", (product_id,))
-        db.commit()
         flash("Deleted a Product!")
     elif 'save' in request.form:
-        product_id = request.form['productID']
-        product_name = request.form['name']
-        product_description = request.form['description']
-        product_price = request.form['price']
-        q = "UPDATE products SET name=?, description=?, price=? WHERE id=?"
-        cols = (product_name, product_description, product_price, product_id)
+        product_name, product_description, product_price = request.form['name'], request.form['description'], \
+            request.form['price']
+        q, cols = "UPDATE products SET name=?, description=?, price=?", (
+            product_name, product_description, product_price)
+
         if 'image' in request.files:
             image_file = request.files['image']
             if image_file.filename != '':
                 # Save the file to a folder on the server
                 filename = secure_filename(image_file.filename)
                 image_file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
-                # Update the query to include the filename
-                q = "UPDATE products SET name=?, description=?, price=?, image_filename=? WHERE id=?"
-                cols = (product_name, product_description, product_price, filename, product_id)
-        db = get_db()
-        db.execute(q, cols)
-        db.commit()
-        flash("Saved Product!")
+                q, cols = "UPDATE products SET name=?, description=?, price=?, image_filename=?", (
+                    product_name, product_description, product_price, filename)
 
+        db.execute(q + " WHERE id=?", cols + (product_id,))
+        flash("Edited Product!")
+
+    db.commit()
     return redirect(url_for('wos.products'))
