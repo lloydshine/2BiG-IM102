@@ -41,8 +41,7 @@
                         {% if g.user.account_type == "customer" %}
                         <a class="dropdown-item" href="{{ url_for('customer.myorders') }}">My Orders</a>
                         {% elif g.user.account_type == "admin" %}
-                        <a class="dropdown-item" href="#">Orders</a>
-                        <a class="dropdown-item" href="#">Deliveries</a>
+                        <a class="dropdown-item" href="{{ url_for('admin.logs') }}">Orders and Deliveries</a>
                         {% elif g.user.account_type == "delivery" %}
                         <a class="dropdown-item" href="#">Orders</a>
                         <a class="dropdown-item" href="#">My Deliveries</a>

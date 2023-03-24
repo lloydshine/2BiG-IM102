@@ -94,3 +94,11 @@ def product():
 
     db.commit()
     return redirect(url_for('wos.products'))
+
+
+@bp.route('/logs>', methods=['POST', 'GET'])
+@login_required
+@account_type_required('admin')
+def logs():
+
+    return render_template('admin/orddel.html')
