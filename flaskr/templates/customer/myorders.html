@@ -33,41 +33,38 @@
     <thead>
       <tr>
         <th>Order ID</th>
-        <th>Product</th>
+        <th>Product ID</th>
         <th>Quantity</th>
         <th>Date Ordered</th>
+        <th>Address</th>
+        <th>Total Price</th>
         <th>Status</th>
+        <th>Action</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>123456</td>
-        <td>Product 1</td>
-        <td>2</td>
-        <td>2022-03-13</td>
-        <td><span class="badge badge-primary">Processing</span></td>
-      </tr>
-      <tr>
-        <td>123457</td>
-        <td>Product 2</td>
-        <td>1</td>
-        <td>2022-03-12</td>
-        <td><span class="badge badge-primary">Shipped</span></td>
-      </tr>
-      <tr>
-        <td>123458</td>
-        <td>Product 3</td>
-        <td>3</td>
-        <td>2022-03-11</td>
-        <td><span class="badge badge-success">Delivered</span></td>
-      </tr>
-      <tr>
-        <td>123459</td>
-        <td>Product 4</td>
-        <td>1</td>
-        <td>2022-03-10</td>
-        <td><span class="badge badge-danger">Cancelled</span></td>
-      </tr>
+    {% for order in orders %}
+        <tr>
+            <td>{{ order.id }}</td>
+            <td>{{ order.product_id }}</td>
+            <td>{{ order.quantity }}</td>
+            <td>{{ order.date_ordered }}</td>
+            <td>{{ order.address }}</td>
+            <td>{{ order.total_price }}</td>
+            {% if order.status == "pending" %}
+                <td><span class="badge badge-warning">{{ order.status }}</span></td>
+            {% elif order.status == "taken" %}
+                <td><span class="badge badge-success">{{ order.status }}</span></td>
+            {% elif order.status == "cancelled" %}
+                <td><span class="badge badge-danger">{{ order.status }}</span></td>
+            {% endif %}
+            <td>
+                {% if order.status == "pending" %}
+                    <a href="#" class="btn btn-danger">Cancel</a>
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
     </tbody>
   </table>
   <nav>

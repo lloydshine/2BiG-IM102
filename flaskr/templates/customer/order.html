@@ -20,16 +20,21 @@
         </div>
         <!-- Order Form Column -->
         <div class="col-md-6">
-            <form id="saveProductForm" method="POST" action="#" enctype="multipart/form-data">
+            <form id="saveProductForm" method="POST" action="{{ url_for('customer.place_order', product_id=p.id) }}" enctype="multipart/form-data">
                 <!-- Name Field -->
                 <div class="form-group">
                     <label for="quantity">Quantity</label>
-                    <input type="number" class="form-control" id="quantity" name="quantity" required>
+                    <input type="number" class="form-control" id="quantity" name="quantity"  value="0"  min="0" required>
+                </div>
+                <!-- Price Field -->
+                <div class="form-group">
+                    <label for="total_price">Total Price</label>
+                    <input type="number" class="form-control" id="total_price" name="total_price" value="0" required>
                 </div>
                 <!-- Description Field -->
                 <div class="form-group">
                     <label for="address">Address</label>
-                    <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
+                    <textarea class="form-control" id="address" name="address" rows="3" required>{{ g.user.address }}</textarea>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -39,3 +44,13 @@
         </div>
     </div>
 </div>
+
+<script>
+    //onchange on the quantity field update the total price
+    $('#quantity').on('change', function () {
+        var quantity = $('#quantity').val();
+        var price = {{ p.price }};
+        var total_price = quantity * price;
+        $('#total_price').val(total_price);
+    });
+</script>

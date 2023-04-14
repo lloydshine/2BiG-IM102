@@ -36,13 +36,14 @@
                         {{ g.user.username }}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="{{ url_for('wos.dashboard') }}">Dashboard</a>
                         <a class="dropdown-item" href="{{ url_for('wos.profile', userid=g.user.id) }}">Profile</a>
                         {% if g.user.account_type == "customer" %}
                         <a class="dropdown-item" href="{{ url_for('customer.myorders') }}">My Orders</a>
                         {% elif g.user.account_type == "admin" %}
+                        <a class="dropdown-item" href="{{ url_for('wos.dashboard') }}">Dashboard</a>
                         <a class="dropdown-item" href="{{ url_for('admin.logs') }}">Orders and Deliveries</a>
                         {% elif g.user.account_type == "delivery" %}
+                        <a class="dropdown-item" href="{{ url_for('wos.dashboard') }}">Dashboard</a>
                         <a class="dropdown-item" href="#">Orders</a>
                         <a class="dropdown-item" href="#">My Deliveries</a>
                         {% endif %}
