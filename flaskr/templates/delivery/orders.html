@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block title %}Orders{% endblock %}
+
+{% block content %}
+
+<style>
+  .badge {
+    width: 100px;
+    padding: 10px;
+  }
+  .container {
+    padding: 50px;
+  }
+  .pagination {
+    margin-top: 20px;
+    justify-content: center;
+  }
+</style>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6">
+      <h2>Orders</h2>
+    </div>
+    <div class="col-sm-6">
+      <form class="form-inline float-right">
+        <input class="form-control mr-sm-2" type="text" placeholder="Search">
+        <button class="btn btn-primary" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>Product ID</th>
+        <th>Quantity</th>
+        <th>Date Ordered</th>
+        <th>Address</th>
+        <th>Total Price</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for order in orders %}
+        <tr>
+            <td>{{ order.id }}</td>
+            <td>{{ order.product_id }}</td>
+            <td>{{ order.quantity }}</td>
+            <td>{{ order.date_ordered }}</td>
+            <td>{{ order.address }}</td>
+            <td>{{ order.total_price }}</td>
+            {% if order.status == "pending" %}
+                <td><span class="badge badge-warning">{{ order.status }}</span></td>
+            {% elif order.status == "taken" %}
+                <td><span class="badge badge-success">{{ order.status }}</span></td>
+            {% elif order.status == "cancelled" %}
+                <td><span class="badge badge-danger">{{ order.status }}</span></td>
+            {% endif %}
+            <td>
+                {% if order.status == "pending" %}
+                    <a href="#" class="btn btn-primary">Take Order</a>
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  <nav>
+    <ul class="pagination">
+      <li class="page-item disabled">
+        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+      </li>
+      <li class="page-item active" aria-current="page">
+        <a class="page-link" href="#">1</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="#">2</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="#">3</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="#">Next</a>
+      </li>
+    </ul>
+  </nav>
+</div>
+{% endblock %}

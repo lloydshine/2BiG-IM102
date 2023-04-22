@@ -34,7 +34,11 @@
                 <!-- Description Field -->
                 <div class="form-group">
                     <label for="address">Address</label>
-                    <textarea class="form-control" id="address" name="address" rows="3" required>{{ g.user.address }}</textarea>
+                    <select class="form-control" id="address" name="address" required>
+                        {% for address in g.user_address %}
+                        <option value="{{ address.id }}">{{ address.street }}, {{ address.house_no }}, {{ address.city }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

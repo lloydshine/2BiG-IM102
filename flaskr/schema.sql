@@ -2,6 +2,7 @@
 -- Drop any existing data and create empty tables.
 
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS user_address;
 DROP TABLE IF EXISTS products;
 DROP TABLE IF EXISTS orders;
 DROP TABLE IF EXISTS deliveries;
@@ -10,12 +11,22 @@ CREATE TABLE users (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   username TEXT UNIQUE NOT NULL,
   password TEXT NOT NULL,
-  fullname TEXT NOT NULL,
+  fname TEXT NOT NULL,
+  mname TEXT NOT NULL,
+  lname TEXT NOT NULL,
   phone_number TEXT NOT NULL,
-  address TEXT NOT NULL,
   image_filename TEXT,
   account_type TEXT NOT NULL CHECK (account_type IN ('customer', 'admin', 'delivery')),
   date_joined TIMESTAMP DEFAULT (datetime('now','localtime'))
+);
+
+CREATE TABLE user_address (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL,
+  street TEXT NOT NULL,
+  city TEXT NOT NULL,
+  house_no TEXT NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
 CREATE TABLE products (
@@ -34,10 +45,11 @@ CREATE TABLE orders (
   quantity INTEGER NOT NULL,
   total_price INTEGER NOT NULL,
   status TEXT NOT NULL CHECK (status IN ('pending', 'taken', 'cancelled')) DEFAULT 'pending',
-  address TEXT NOT NULL,
+  address INTEGER NOT NULL,
   date_ordered TIMESTAMP DEFAULT (datetime('now','localtime')),
   FOREIGN KEY (customer_id) REFERENCES users (id),
-  FOREIGN KEY (product_id) REFERENCES products (id)
+  FOREIGN KEY (product_id) REFERENCES products (id),
+  FOREIGN KEY (address) REFERENCES user_address (id)
 );
 
 CREATE TABLE deliveries (
@@ -51,11 +63,17 @@ CREATE TABLE deliveries (
   FOREIGN KEY (worker_id) REFERENCES users (id)
 );
 
-INSERT INTO users (username, password, fullname, phone_number, address, account_type)
+INSERT INTO users (username, password,fname,mname,lname, phone_number, account_type)
 VALUES
-    ('admin', 'admin', 'Abdul Badar', '1234567890', 'Iligan City', 'admin'),
-    ('lloyd', 'lloyd123', 'Lloyd Semblante', '1234567890', 'Iligan City', 'customer'),
-    ('nurkeymar', 'nurkeymar123', 'Abdul Nurkeymar', '1234567890', 'Iligan City', 'delivery');
+    ('admin', 'admin', 'Abdul','Muhamad','Badar','1234567890','admin'),
+    ('lloyd', 'lloyd123', 'Lloyd','Tutor','Semblante', '1234567890','customer'),
+    ('nurkeymar', 'nurkeymar123', 'Abdul','Jabol','Nurkeymar', '1234567890','delivery');
+
+INSERT INTO user_address (user_id, street, city, house_no)
+VALUES
+    (1, 'Barangay Maria Cristina', 'Iligan City', '002'),
+    (2, 'Tubod Baruy', 'Iligan City', '078'),
+    (3, 'Tibanga', 'Iligan City', '789');
 
 INSERT INTO products (name, description, image_filename, price)
 VALUES

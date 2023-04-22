@@ -41,11 +41,13 @@ def create_app(test_config=None):
     from flaskr.templates.auth import auth
     from flaskr.templates.admin import admin
     from flaskr.templates.customer import customer
+    from flaskr.templates.delivery import delivery
 
     app.register_blueprint(auth.bp)
     app.register_blueprint(wos.bp)
     app.register_blueprint(admin.bp)
     app.register_blueprint(customer.bp)
+    app.register_blueprint(delivery.bp)
 
 
     app.add_url_rule("/", endpoint="index")

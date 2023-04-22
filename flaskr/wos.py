@@ -28,7 +28,10 @@ def profile(userid):
     p = (
         get_db().execute("SELECT * FROM users WHERE id = ?", (userid,)).fetchone()
     )
-    return render_template("profile.html", p=p)
+    a = (
+        get_db().execute("SELECT * FROM user_address WHERE user_id = ?", (userid,)).fetchall()
+    )
+    return render_template("profile.html", p=p,a=a)
 
 
 @bp.route('/products')

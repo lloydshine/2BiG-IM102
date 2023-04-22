@@ -45,9 +45,13 @@ def load_logged_in_user():
 
     if user_id is None:
         g.user = None
+        g.user_address = None
     else:
         g.user = (
             get_db().execute("SELECT * FROM users WHERE id = ?", (user_id,)).fetchone()
+        )
+        g.user_address = (
+            get_db().execute("SELECT * FROM user_address WHERE user_id= ?", (user_id,)).fetchall()
         )
 
 
@@ -62,27 +66,19 @@ def register():
         username = request.form["username"]
         password = request.form["password"]
         password2 = request.form["password2"]
-        fullname = request.form["fullname"]
-        address = request.form["address"]
+        firstname = request.form["firstname"]
+        middlename = request.form["middlename"]
+        lastname = request.form["lastname"]
         phone_number = request.form["phone_number"]
         account_type = request.form["account_type"]
         db = get_db()
         error = None
 
-        if not username:
-            error = "Username is required."
-        elif not phone_number:
-            error = "Number is required."
-        elif not password:
-            error = "Password is required."
-        elif password != password2:
-            error = "Password not matched."
-
         if error is None:
             try:
                 db.execute(
-                    "INSERT INTO users (username,password,phone_number,fullname,address,account_type) VALUES (?,?,?,?,?,?)",
-                    (username, password,phone_number,fullname,address,account_type),
+                    "INSERT INTO users (username,password,phone_number,fname,mname,lname,account_type) VALUES (?,?,?,?,?,?,?)",
+                    (username, password,phone_number,firstname,middlename,lastname,account_type),
                 )
                 db.commit()
             except db.IntegrityError:
