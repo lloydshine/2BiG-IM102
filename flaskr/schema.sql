@@ -37,7 +37,6 @@ CREATE TABLE products (
   price INTEGER NOT NULL
 );
 
-
 CREATE TABLE orders (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   customer_id INTEGER NOT NULL,
@@ -65,9 +64,9 @@ CREATE TABLE deliveries (
 
 INSERT INTO users (username, password,fname,mname,lname, phone_number, account_type)
 VALUES
-    ('admin', 'admin', 'Abdul','Muhamad','Badar','1234567890','admin'),
+    ('admin', 'admin', 'Abdul','Jabol','Badar','1234567890','admin'),
     ('lloyd', 'lloyd123', 'Lloyd','Tutor','Semblante', '1234567890','customer'),
-    ('nurkeymar', 'nurkeymar123', 'Abdul','Jabol','Nurkeymar', '1234567890','delivery');
+    ('nurkeymar', 'nurkeymar123', 'Abdul','Muhamad','Nurkeymar', '1234567890','delivery');
 
 INSERT INTO user_address (user_id, street, city, house_no)
 VALUES
