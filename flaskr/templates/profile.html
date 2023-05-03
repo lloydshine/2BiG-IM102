@@ -81,10 +81,20 @@
                             <p class="mb-0">Address</p>
                         </div>
                         {% for address in a %}
-                        <div class="col-sm-9">
-                            <p class="text-muted mb-0">{{ address.street }}</p>
-                            <p class="text-muted mb-0">House No. :{{ address.house_no }}</p>
-                            <p class="text-muted mb-0">{{ address.city }}</p>
+                        <div class="card">
+                            <div class="card-body">
+                                <p class="card-text">
+                                    <strong>Street:</strong> {{ address.street }} <br>
+                                    <strong>House No.:</strong> {{ address.house_no }} <br>
+                                    <strong>City:</strong> {{ address.city }} <br>
+                                </p>
+                                {% if g.user.id == p.id %}
+                                <form action="{{ url_for('wos.deleteAddress', addressid=address.id) }}" method="POST">
+                                    <input type="hidden" name="addressid" value="{{ address.id }}">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                                {% endif %}
+                            </div>
                         </div>
                         {% endfor %}
                     </div>
@@ -97,12 +107,17 @@
                             data-target="#deleteAccountModal">
                         Delete Account
                     </button>
-                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                    <button type="button" class="btn btn-primary mr-2" data-toggle="modal"
                             data-target="#editProfileModal">
                         Edit Account
                     </button>
+                    <button type="button" class="btn btn-success" data-toggle="modal"
+                            data-target="#addAddressModal">
+                        Add Address
+                    </button>
                 </div>
             </div>
+
             {% block modal %}
             <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel"
                  aria-hidden="true">
@@ -146,6 +161,46 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Add Address Modal -->
+            <div class="modal fade" id="addAddressModal" tabindex="-1" role="dialog"
+                 aria-labelledby="addAddressModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addAddressModalLabel">Add Address</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="addAddressForm" method="POST" action="{{ url_for('wos.addAddress') }}"
+                                  enctype="multipart/form-data">
+                                <div class="form-group">
+                                    <label for="street">Street</label>
+                                    <input type="text" class="form-control" id="street" name="street"
+                                           placeholder="Enter street">
+                                </div>
+                                <div class="form-group">
+                                    <label for="houseno">House No.</label>
+                                    <input type="text" class="form-control" id="houseno" name="houseno"
+                                           placeholder="Enter house number">
+                                </div>
+                                <div class="form-group">
+                                    <label for="city">City</label>
+                                    <input type="text" class="form-control" id="city" name="city"
+                                           placeholder="Enter city">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Save Address</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             {% endblock %}
             {% endif %}
         </div>

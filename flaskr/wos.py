@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, url_for, redirect, request
 from flask import g
 from flask import render_template
 from flaskr.templates.auth.auth import login_required
@@ -33,6 +33,31 @@ def profile(userid):
     )
     return render_template("profile.html", p=p,a=a)
 
+@bp.route("/add_address", methods=['POST', 'GET'])
+def addAddress():
+    # get the form
+    street = request.form['street']
+    houseno = request.form['houseno']
+    city = request.form['city']
+    # insert the order to address table
+    db = get_db()
+    db.execute(
+        "INSERT INTO user_address (user_id,street,house_no,city) VALUES (?,?,?,?)",
+        (g.user["id"],street,houseno,city),
+    )
+    db.commit()
+    # return to products page
+    return redirect(url_for('wos.profile', userid=g.user["id"]))
+
+@bp.route("/delete_address/<int:addressid>",methods=['POST'])
+def deleteAddress(addressid):
+    db = get_db()
+    db.execute(
+        "DELETE FROM user_address WHERE id = ?",
+        (addressid,)
+    )
+    db.commit()
+    return redirect(url_for('wos.profile', userid=g.user["id"]))
 
 @bp.route('/products')
 def products():
