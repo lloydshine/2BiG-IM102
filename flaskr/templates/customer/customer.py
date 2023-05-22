@@ -52,3 +52,16 @@ def place_order(product_id):
     #return to products page
     return redirect(url_for('wos.products'))
 
+
+@bp.route('/cancelorder/<int:order_id>', methods=['POST', 'GET'])
+@login_required
+@account_type_required('customer')
+def cancel_order(order_id):
+    db = get_db()
+    db.execute(
+        "UPDATE orders SET status = 'cancelled' WHERE id = ?",
+        (order_id,)
+    )
+    db.commit()
+    return redirect(url_for('customer.myorders'))
+

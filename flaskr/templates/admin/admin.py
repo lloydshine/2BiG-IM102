@@ -100,4 +100,7 @@ def product():
 @login_required
 @account_type_required('admin')
 def logs():
-    return render_template('admin/orddel.html')
+    orders = (
+        get_db().execute("SELECT * FROM orders").fetchall()
+    )
+    return render_template('admin/orddel.html', orders=orders)

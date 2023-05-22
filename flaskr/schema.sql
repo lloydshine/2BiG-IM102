@@ -78,5 +78,5 @@ INSERT INTO products (name, description, image_filename, price)
 VALUES
     ('Water Gallon', '10 Liters Gallon', '1.jpg', 50),
     ('Water Container', '12 Litters Gallon with faucet', '2.jpg', 120),
-    ('Water Bottles', '8 Water Bottles', '3.jpg', 120),
+    ('Water Bottles', '20 Water Bottles', '3.jpg', 120),
     ('AquaFlask Bottle', 'Rich Kids Water Bottle', '5.png', 1200);
