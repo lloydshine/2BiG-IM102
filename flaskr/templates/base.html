@@ -45,7 +45,7 @@
                         {% elif g.user.account_type == "delivery" %}
                         <a class="dropdown-item" href="#">Dashboard</a>
                         <a class="dropdown-item" href="{{ url_for('delivery.orders') }}">Orders</a>
-                        <a class="dropdown-item" href="#">My Deliveries</a>
+                        <a class="dropdown-item" href="{{ url_for('delivery.myDeliveries') }}">My Deliveries</a>
                         {% endif %}
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ url_for('auth.logout') }}">Logout</a>

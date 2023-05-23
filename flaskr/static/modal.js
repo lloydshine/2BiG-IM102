@@ -30,11 +30,10 @@ function openProductEditModal(id) {
   });
 }
 
-function openOrderModal(id) {
-  console.log("Clicked")
+function openCustomerOrderModal(id) {
   // Make AJAX request to Flask route to get modal HTML
   $j.ajax({
-    url: '/order/'+id,
+    url: '/customerOrder/'+id,
     type: 'GET',
     data: {productid: id},
     success: function(data) {
@@ -43,6 +42,22 @@ function openOrderModal(id) {
       $('#productModal .modal-content').append(data.htmlresponse);
       // Show modal
       $('#productModal').modal('show');
+    }
+  });
+}
+
+function openOrderModal(id) {
+  // Make AJAX request to Flask route to get modal HTML
+  $j.ajax({
+    url: '/viewOrder/'+id,
+    type: 'GET',
+    data: {orderid: id},
+    success: function(data) {
+      // Populate modal content with returned HTML
+      $('#orderModal .modal-content').html(data);
+      $('#orderModal .modal-content').append(data.htmlresponse);
+      // Show modal
+      $('#orderModal').modal('show');
     }
   });
 }

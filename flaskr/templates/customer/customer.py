@@ -20,10 +20,10 @@ def myorders():
     # Render the products page with the retrieved products
     return render_template('customer/myorders.html', orders=orders)
 
-@bp.route('/order/<int:product_id>', methods=['POST', 'GET'])
+@bp.route('/customerOrder/<int:product_id>', methods=['POST', 'GET'])
 @login_required
 @account_type_required('customer')
-def edit_product(product_id):
+def order(product_id):
     p = (
         get_db().execute("SELECT * FROM products WHERE id = ?", (product_id,)).fetchone()
     )
@@ -38,10 +38,6 @@ def place_order(product_id):
     address = request.form['address']
     quantity = request.form['quantity']
     total_price = request.form['total_price']
-    #get the product
-    p = (
-        get_db().execute("SELECT * FROM products WHERE id = ?", (product_id,)).fetchone()
-    )
     #insert the order to oders table
     db = get_db()
     db.execute(

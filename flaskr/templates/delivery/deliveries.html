@@ -1,10 +1,75 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block title %}Orders{% endblock %}
+
+{% block modal %}
+<div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="OrderModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<style>
+  .badge {
+    width: 100px;
+    padding: 10px;
+  }
+  .container {
+    padding: 50px;
+  }
+  .pagination {
+    margin-top: 20px;
+    justify-content: center;
+  }
+
+</style>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+            <h2>My Deliveries</h2>
+        </div>
+        <div class="col-sm-6">
+            <form class="form-inline float-right">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search">
+                <button class="btn btn-primary" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Delivery ID</th>
+            <th>Order ID</th>
+            <th>Date Taken</th>
+            <th>Date Ordered</th>
+            <th>Date Delivered</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for d in deliveries %}
+        <tr>
+            <td>{{ d.id }}</td>
+            <td>{{ d.order_id }}</td>
+            <td>{{ d.date_taken }}</td>
+            <td>{{ d.date_ordered }}</td>
+            <td>{{ d.date_delivered }}</td>
+            {% if d.status == "cancelled" %}
+            <td><span class="badge badge-danger">{{ d.status }}</span></td>
+            {% else %}
+            <td><span class="badge badge-success">{{ d.status }}</span></td>
+            {% endif %}
+            <td><a href="#" class="btn btn-primary">View</a></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

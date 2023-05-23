@@ -42,7 +42,7 @@
                 {% if g.user.account_type == "admin" %}
                 <button class="btn btn-danger" data-id='{{ product.id }}' onclick="openProductEditModal({{ product.id }})">Edit</button>
                 {% elif g.user.account_type == "customer" %}
-                 <button class="btn btn-success" data-id='{{ product.id }}' onclick="openOrderModal({{ product.id }})">Order</button>
+                 <button class="btn btn-success" data-id='{{ product.id }}' onclick="openCustomerOrderModal({{ product.id }})">Order</button>
                 {% endif %}
             </div>
         </div>

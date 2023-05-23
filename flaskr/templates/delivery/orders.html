@@ -2,6 +2,16 @@
 
 {% block title %}Orders{% endblock %}
 
+{% block modal %}
+<div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="OrderModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+{% endblock %}
+
 {% block content %}
 
 <style>
@@ -16,34 +26,35 @@
     margin-top: 20px;
     justify-content: center;
   }
+
 </style>
 <div class="container">
-  <div class="row">
-    <div class="col-sm-6">
-      <h2>Orders</h2>
+    <div class="row">
+        <div class="col-sm-6">
+            <h2>Orders</h2>
+        </div>
+        <div class="col-sm-6">
+            <form class="form-inline float-right">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search">
+                <button class="btn btn-primary" type="submit">Search</button>
+            </form>
+        </div>
     </div>
-    <div class="col-sm-6">
-      <form class="form-inline float-right">
-        <input class="form-control mr-sm-2" type="text" placeholder="Search">
-        <button class="btn btn-primary" type="submit">Search</button>
-      </form>
-    </div>
-  </div>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Order ID</th>
-        <th>Product ID</th>
-        <th>Quantity</th>
-        <th>Date Ordered</th>
-        <th>Address</th>
-        <th>Total Price</th>
-        <th>Status</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-    {% for order in orders %}
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Product ID</th>
+            <th>Quantity</th>
+            <th>Date Ordered</th>
+            <th>Address</th>
+            <th>Total Price</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for order in orders %}
         <tr>
             <td>{{ order.id }}</td>
             <td>{{ order.product_id }}</td>
@@ -54,38 +65,40 @@
             <td><span class="badge badge-warning">{{ order.status }}</span></td>
             <td><a href="{{ url_for('delivery.take', order_id=order.id) }}" class="btn btn-primary">Take Order</a></td>
         </tr>
-    {% endfor %}
-    </tbody>
-  </table>
+        {% endfor %}
+        </tbody>
+    </table>
 </div>
-<br />
+<br/>
 <div class="container">
-  <div class="row">
-    <div class="col-sm-6">
-      <h2>Pending Deliveries</h2>
+    <div class="row">
+        <div class="col-sm-6">
+            <h2>Pending Deliveries</h2>
+        </div>
     </div>
-  </div>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Order ID</th>
-        <th>Date Taken</th>
-        <th>Status</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-    {% for delivery in deliveries %}
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Date Taken</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for delivery in deliveries %}
         <tr>
             <td>{{ delivery.id }}</td>
             <td>{{ delivery.date_taken }}</td>
             <td><span class="badge badge-warning">{{ delivery.status }}</span></td>
             <td>
-                <a href="#" class="btn btn-primary">View</a>
+                <button class="btn btn-primary" data-id='{{ delivery.order_id }}' onclick="openOrderModal({{ delivery.order_id }})">View</button>
             </td>
         </tr>
-    {% endfor %}
-    </tbody>
-  </table>
+        {% endfor %}
+        </tbody>
+    </table>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{{ url_for('static', filename='modal.js') }}"></script>
 {% endblock %}

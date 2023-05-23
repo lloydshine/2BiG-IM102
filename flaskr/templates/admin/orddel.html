@@ -34,67 +34,32 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <th>OrderID</th>
-            <th>UserID</th>
+            <th>Delivery ID</th>
+            <th>CustomerID</th>
             <th>ProductID</th>
-            <th>Quantity</th>
             <th>Date Ordered</th>
             <th>Status</th>
+            <th>Action</th>
         </tr>
         </thead>
         <tbody>
+        {% for o in orders %}
         <tr>
-            <td>123456</td>
-            <td>12</td>
-            <td>2</td>
-            <td>5</td>
-            <td>2022-03-13</td>
-            <td><span class="badge badge-primary">Processing</span></td>
+            <td>{{ o.id }}</td>
+            <td>{{ o.customer_id }}</td>
+            <td>{{ o.product_id }}</td>
+            <td>{{ o.date_ordered }}</td>
+            {% if o.status == "pending" %}
+            <td><span class="badge badge-warning">{{ o.status }}</span></td>
+            {% elif o.status == "taken" %}
+            <td><span class="badge badge-success">{{ o.status }}</span></td>
+            {% elif o.status == "cancelled" %}
+            <td><span class="badge badge-danger">{{ o.status }}</span></td>
+            {% endif %}
+            <td><button href="#" class="btn btn-primary">View</button></td>
         </tr>
-        <tr>
-            <<td>123456</td>
-            <td>12</td>
-            <td>2</td>
-            <td>5</td>
-            <td>2022-03-13</td>
-            <td><span class="badge badge-primary">Processing</span></td>
-        </tr>
-        <tr>
-            <td>123456</td>
-            <td>12</td>
-            <td>2</td>
-            <td>5</td>
-            <td>2022-03-13</td>
-            <td><span class="badge badge-success">Delivered</span></td>
-        </tr>
-        <tr>
-            <td>123456</td>
-            <td>12</td>
-            <td>2</td>
-            <td>5</td>
-            <td>2022-03-13</td>
-            <td><span class="badge badge-danger">Cancelled</span></td>
-        </tr>
+        {% endfor %}
         </tbody>
     </table>
-    <nav>
-        <ul class="pagination">
-            <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-            </li>
-            <li class="page-item active" aria-current="page">
-                <a class="page-link" href="#">1</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="#">2</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="#">3</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-            </li>
-        </ul>
-    </nav>
 </div>
 {% endblock %}
