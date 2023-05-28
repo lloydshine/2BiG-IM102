@@ -61,3 +61,23 @@ def cancel_order(order_id):
     db.commit()
     return redirect(url_for('customer.myorders'))
 
+@bp.route('/viewmyorder/<int:order_id>', methods=['POST', 'GET'])
+@login_required
+@account_type_required('customer')
+def view_order(order_id):
+    db = get_db()
+    order = (
+        get_db().execute("SELECT * FROM orders WHERE id = ?", (order_id,)).fetchone()
+    )
+    product = (
+        get_db().execute("SELECT * FROM products WHERE id = ?", (order['product_id'],)).fetchone()
+    )
+    delivery = None
+    if order['status'] != 'pending':
+        delivery = db.execute(
+            "SELECT * FROM deliveries JOIN users ON deliveries.worker_id = users.id WHERE order_id = ?",
+            (order_id,),
+        ).fetchone()
+
+    return jsonify({'htmlresponse': render_template('customer/myorder.html', order=order,delivery=delivery,product=product)})
+

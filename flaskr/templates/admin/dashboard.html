@@ -1,169 +1,135 @@
 {% extends 'base.html' %}
 {% block title %} Admin - Dash Board {% endblock %}
 
+{% block modal %}
+<div class="modal fade" id="dashModal" tabindex="-1" role="dialog" aria-labelledby="dashModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+{% endblock %}
+
 {% block content %}
 <br>
 <h3>Admin Dashboard</h3>
 <br>
 <div class="row">
-  <div class="col-sm-4">
-    <div class="card text-white bg-success mb-3">
-      <div class="card-header">This Month's Earning</div>
-      <div class="card-body">
-        <h5 class="card-title">$10,000</h5>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="card text-white bg-info mb-3">
-      <div class="card-header">Product Sold</div>
-      <div class="card-body">
-        <h5 class="card-title">500</h5>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="card text-white bg-warning mb-3">
-      <div class="card-header">Total Orders</div>
-      <div class="card-body">
-        <h5 class="card-title">1000</h5>
-      </div>
-    </div>
-  </div>
-</div>
-<hr class="hr" />
-<section class="most-popular-section">
-  <div class="container">
-    <div class="card">
-      <div class="card-body">
-        <div class="row">
-          <div class="col-md-6">
-            <h2>Most Popular Products</h2>
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>Ranking</th>
-                  <th>Product</th>
-                  <th>Total Orders</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td><a href="#">Product 1</a></td>
-                  <td>100</td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td><a href="#">Product 2</a></td>
-                  <td>80</td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td><a href="#">Product 3</a></td>
-                  <td>60</td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td><a href="#">Product 4</a></td>
-                  <td>40</td>
-                </tr>
-                <tr>
-                  <td>5</td>
-                  <td><a href="#">Product 5</a></td>
-                  <td>20</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="col-md-6">
-            <h2>Most Deliveries</h2>
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>Ranking</th>
-                  <th>Worker</th>
-                  <th>Total Deliveries</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td><a href="#">Worker 1</a></td>
-                  <td>50</td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td><a href="#">Worker 2</a></td>
-                  <td>40</td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td><a href="#">Worker 3</a></td>
-                  <td>30</td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td><a href="#">Worker 4</a></td>
-                  <td>20</td>
-                </tr>
-                <tr>
-                  <td>5</td>
-                  <td><a href="#">Worker 5</a></td>
-                  <td>10</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+    <div class="col-sm-4">
+        <div class="card text-white bg-success mb-3">
+            <div class="card-header">Total Income</div>
+            <div class="card-body">
+                <h5 class="card-title">Php {{ summ.total_income }}</h5>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
+    <div class="col-sm-4">
+        <div class="card text-white bg-info mb-3">
+            <div class="card-header">Product Sold</div>
+            <div class="card-body">
+                <h5 class="card-title">{{ summ.total_sold_products }}</h5>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="card text-white bg-warning mb-3">
+            <div class="card-header">Total Orders</div>
+            <div class="card-body">
+                <h5 class="card-title">{{ summ.total_orders }}</h5>
+            </div>
+        </div>
+    </div>
+</div>
+<hr class="hr"/>
+<section class="most-popular-section">
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2>Most Popular Products</h2>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Product</th>
+                                <th>Total Orders</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for p in products %}
+                            <tr>
+                                <td>{{p.product_id}}</td>
+                                <td><a href="#">{{p.product_name}}</a></td>
+                                <td>{{p.total_orders}}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <h2>Most Deliveries</h2>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Ranking</th>
+                                <th>Worker</th>
+                                <th>Total Deliveries</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for w in top %}
+                            <tr>
+                                <td>{{ w.worker_id }}</td>
+                                <td><a href="#">{{ w.worker_name }}</a></td>
+                                <td>{{ w.total_deliveries }}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
-<hr class="hr" />
+<hr class="hr"/>
 <div class="container">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="d-flex justify-content-between mb-3">
-        <h2>Workers Table</h2>
-        <button class="btn btn-primary">Add Worker</button>
-      </div>
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Full Name</th>
-            <th>Address</th>
-            <th>Phone Number</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>John Smith</td>
-            <td>123 Main St</td>
-            <td>555-555-1212</td>
-            <td>
-              <button class="btn btn-sm btn-primary">Edit</button>
-              <button class="btn btn-sm btn-danger">Remove</button>
-            </td>
-          </tr>
-          <tr>
-            <td>Jane Doe</td>
-            <td>456 Maple Ave</td>
-            <td>555-555-1234</td>
-            <td>
-              <button class="btn btn-sm btn-primary">Edit</button>
-              <button class="btn btn-sm btn-danger">Remove</button>
-            </td>
-          </tr>
-          <!-- additional rows as needed -->
-        </tbody>
-      </table>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="d-flex justify-content-between mb-3">
+                <h2>Workers Table</h2>
+                <button type="button" class="btn btn-primary" onclick="openAddWorkerModal()">Add Worker</button>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Full Name</th>
+                    <th>Phone Number</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for w in workers %}
+                <tr>
+                    <td>{{ w.fname }} {{ w.mname }} {{ w.lname }}</td>
+                    <td>{{ w.phone_number }}</td>
+                    <td>
+                        <form action="{{ url_for('admin.remove_worker', worker_id=w.id) }}" method="POST">
+                            <input type="hidden" name="workerid" value="{{ w.id }}">
+                            <button type="submit" class="btn btn-danger">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
-  </div>
 </div>
 
-
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{{ url_for('static', filename='modal.js') }}"></script>
 {% endblock %}

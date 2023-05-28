@@ -2,6 +2,16 @@
 
 {% block title %}Admin - Orders and Deliveries{% endblock %}
 
+{% block modal %}
+<div class="modal fade" id="ordelModal" tabindex="-1" role="dialog" aria-labelledby="ordelModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+{% endblock %}
+
 {% block content %}
 
 <style>
@@ -56,10 +66,14 @@
             {% elif o.status == "cancelled" %}
             <td><span class="badge badge-danger">{{ o.status }}</span></td>
             {% endif %}
-            <td><button href="#" class="btn btn-primary">View</button></td>
+            <td>
+            <button class="btn btn-primary" data-id='{{ o.id }}' onclick="openOrdelModal({{ o.id }})">View</button>
+            </td>
         </tr>
         {% endfor %}
         </tbody>
     </table>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{{ url_for('static', filename='modal.js') }}"></script>
 {% endblock %}

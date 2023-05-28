@@ -1,0 +1,42 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="dashModalLabel">Add Worker</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form id="addWorkerForm" method="POST" action="{{ url_for('admin.add_worker') }}"
+          enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="fname">Firstname</label>
+            <input type="text" class="form-control" id="fname" name="fname"
+                   required>
+        </div>
+        <div class="form-group">
+            <label for="mname">Middlename</label>
+            <input type="text" class="form-control" id="mname" name="mname"
+                    required>
+        </div>
+        <div class="form-group">
+            <label for="lname">Lastname</label>
+            <input type="text" class="form-control" id="lname" name="lname"
+                   required>
+        </div>
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" id="username" name="username"
+                    required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="text" class="form-control" id="password" name="password"
+                    required>
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="text" class="form-control" id="phone" name="phone"
+                   required>
+        </div>
+        <button type="submit" class="btn btn-primary">Add</button>
+    </form>
+</div>

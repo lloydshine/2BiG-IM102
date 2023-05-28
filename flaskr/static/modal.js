@@ -61,3 +61,50 @@ function openOrderModal(id) {
     }
   });
 }
+
+function openMyOrderModal(id) {
+  // Make AJAX request to Flask route to get modal HTML
+  $j.ajax({
+    url: '/viewmyorder/'+id,
+    type: 'GET',
+    data: {orderid: id},
+    success: function(data) {
+      // Populate modal content with returned HTML
+      $('#myOrderModal .modal-content').html(data);
+      $('#myOrderModal .modal-content').append(data.htmlresponse);
+      // Show modal
+      $('#myOrderModal').modal('show');
+    }
+  });
+}
+
+function openAddWorkerModal() {
+  // Make AJAX request to Flask route to get modal HTML
+  $j.ajax({
+    url: '/add_worker',
+    type: 'GET',
+    success: function(data) {
+      // Populate modal content with returned HTML
+      $('#dashModal .modal-content').html(data);
+      $('#dashModal .modal-content').append(data.htmlresponse);
+      // Show modal
+      $('#dashModal').modal('show');
+    }
+  });
+}
+
+function openOrdelModal(id) {
+  // Make AJAX request to Flask route to get modal HTML
+  $j.ajax({
+    url: '/viewOrdel/'+id,
+    type: 'GET',
+    data: {orderid: id},
+    success: function(data) {
+      // Populate modal content with returned HTML
+      $('#ordelModal .modal-content').html(data);
+      $('#ordelModal .modal-content').append(data.htmlresponse);
+      // Show modal
+      $('#ordelModal').modal('show');
+    }
+  });
+}

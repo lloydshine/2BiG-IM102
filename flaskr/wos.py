@@ -12,17 +12,6 @@ def index():
     return render_template("index.html")
 
 
-@bp.route("/dashboard")
-@login_required
-def dashboard():
-    if g.user["account_type"] == "customer":
-        return render_template("customer/dashboard.html")
-    elif g.user["account_type"] == "delivery":
-        return render_template("delivery/dashboard.html")
-    elif g.user["account_type"] == "admin":
-        return render_template("admin/dashboard.html")
-
-
 @bp.route("/profile/<int:userid>")
 def profile(userid):
     p = (
@@ -33,7 +22,26 @@ def profile(userid):
     )
     return render_template("profile.html", p=p,a=a)
 
+@bp.route("/updateProfile/<int:userid>",methods=['POST', 'GET'])
+@login_required
+def updateProfile(userid):
+    fname = request.form['fname']
+    mname = request.form['mname']
+    lname = request.form['lname']
+    username = request.form['username']
+    password = request.form['password']
+    phoneno = request.form['phone']
+
+    db = get_db()
+    db.execute(
+        "UPDATE users SET fname=?,mname=?,lname=?,username=?,password=?,phone_number=? WHERE id = ?",
+        (fname,lname,mname,username,password,phoneno,userid),
+    )
+    db.commit()
+    return redirect(url_for('wos.profile', userid=userid))
+
 @bp.route("/add_address", methods=['POST', 'GET'])
+@login_required
 def addAddress():
     # get the form
     street = request.form['street']
@@ -50,6 +58,7 @@ def addAddress():
     return redirect(url_for('wos.profile', userid=g.user["id"]))
 
 @bp.route("/delete_address/<int:addressid>",methods=['POST'])
+@login_required
 def deleteAddress(addressid):
     db = get_db()
     db.execute(

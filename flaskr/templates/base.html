@@ -40,10 +40,9 @@
                         {% if g.user.account_type == "customer" %}
                         <a class="dropdown-item" href="{{ url_for('customer.myorders') }}">My Orders</a>
                         {% elif g.user.account_type == "admin" %}
-                        <a class="dropdown-item" href="{{ url_for('wos.dashboard') }}">Dashboard</a>
+                        <a class="dropdown-item" href="{{ url_for('admin.dashboard') }}">Dashboard</a>
                         <a class="dropdown-item" href="{{ url_for('admin.logs') }}">Orders and Deliveries</a>
                         {% elif g.user.account_type == "delivery" %}
-                        <a class="dropdown-item" href="#">Dashboard</a>
                         <a class="dropdown-item" href="{{ url_for('delivery.orders') }}">Orders</a>
                         <a class="dropdown-item" href="{{ url_for('delivery.myDeliveries') }}">My Deliveries</a>
                         {% endif %}

@@ -1,0 +1,38 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="ordelModalLabel">Delivery Details & Order Summary</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-6">
+            <!-- User Details -->
+            <h6>User Details:</h6>
+            <p><strong>Full Name:</strong> {{ order.fullname }}</p>
+            <p><strong>Delivery Address:</strong> {{ order.address }}</p>
+            <p><strong>Contact Number:</strong> {{ order.phone_number }}</p>
+        </div>
+        <div class="col-md-6">
+            <!-- Order Summary -->
+            <h6>Order Summary:</h6>
+            <p><strong>Product ID:</strong> {{ order.id }}</p>
+            <p><strong>Product Name:</strong> {{ order.name }}</p>
+            <p><strong>Price:</strong> {{ order.price }}</p>
+            <p><strong>Quantity:</strong> {{ order.quantity }}</p>
+            <p><strong>Total Price:</strong> {{ order.total_price }}</p>
+            <p><strong>Date Ordered:</strong> {{ order.date_ordered }}</p>
+        </div>
+
+        <div class="col-md-6">
+            <!-- User Details -->
+            <h6>Delivery Worker Details:</h6>
+            <p><strong>Full Name:</strong> {{ delivery.fname }}</p>
+            <p><strong>Contact Number:</strong> {{ delivery.phone_number }}</p>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <!-- Additional buttons or actions if needed -->
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+</div>

@@ -104,3 +104,126 @@ def logs():
         get_db().execute("SELECT * FROM orders").fetchall()
     )
     return render_template('admin/orddel.html', orders=orders)
+
+@bp.route('/viewOrdel/<int:order_id>', methods=['POST', 'GET'])
+@login_required
+@account_type_required('admin')
+def viewOrdel(order_id):
+    order = (
+        get_db().execute(
+            "SELECT o.status,o.quantity,o.total_price,o.date_ordered,u.fname||' '||u.mname||' '||u.lname as fullname,ua.street||' '||ua.city||' '||ua.house_no as address,u.phone_number,p.* FROM orders as o JOIN users as u ON o.customer_id = u.id JOIN user_address as ua ON o.address = ua.id JOIN products as p ON o.product_id = p.id WHERE o.id = ?;",
+            (order_id,)
+        ).fetchone()
+    )
+    delivery = None
+    if order['status'] != 'pending':
+        delivery = get_db().execute(
+            "SELECT * FROM deliveries JOIN users ON deliveries.worker_id = users.id WHERE order_id = ?",
+            (order_id,),
+        ).fetchone()
+    return jsonify({'htmlresponse': render_template('admin/view_ordel.html', order=order, delivery=delivery)})
+
+@bp.route("/adminDashboard")
+@login_required
+@account_type_required('admin')
+def dashboard():
+    summ = (
+        get_db().execute('''
+        SELECT 
+  (
+    SELECT SUM(quantity)
+    FROM orders
+    WHERE orders.id IN (
+      SELECT order_id
+      FROM deliveries
+      WHERE deliveries.status = 'delivered'
+    )
+  ) AS total_sold_products,
+    (
+    SELECT SUM(total_price)
+    FROM orders
+    WHERE orders.id IN (
+      SELECT order_id
+      FROM deliveries
+      WHERE deliveries.status = 'delivered'
+    )
+  ) AS total_income,
+    (
+    SELECT COUNT(*)
+    FROM orders
+  ) AS total_orders;
+        ''').fetchone()
+    )
+
+    products = get_db().execute('''
+    SELECT 
+    p.id AS product_id,
+    p.name AS product_name,
+    COUNT(o.id) AS total_orders
+FROM 
+    products p
+LEFT JOIN 
+    orders o ON p.id = o.product_id
+GROUP BY 
+    p.id, p.name
+ORDER BY 
+    total_orders DESC;
+    ''')
+
+    top_workers = get_db().execute('''
+    SELECT
+  d.worker_id,
+  u.fname AS worker_name,
+  COUNT(d.id) AS total_deliveries
+FROM
+  deliveries d
+JOIN
+  users u ON d.worker_id = u.id
+GROUP BY
+  d.worker_id, u.fname
+ORDER BY
+  total_deliveries DESC;
+    ''')
+
+    workers = get_db().execute('''
+        SELECT * FROM users WHERE account_type = 'delivery'
+        ''').fetchall()
+
+    return render_template("admin/dashboard.html", summ=summ, products=products, top=top_workers, workers=workers)
+
+@bp.route('/add_worker', methods=['POST', 'GET'])
+@login_required
+@account_type_required('admin')
+def add_worker():
+    if request.method == 'POST':
+        fname = request.form['fname']
+        mname = request.form['mname']
+        lname = request.form['lname']
+        username = request.form['username']
+        password = request.form['password']
+        phone_number = request.form['phone']
+
+        db = get_db()
+        db.execute(
+            "INSERT INTO users (fname,mname,lname,username,password,phone_number,account_type) VALUES (?,?,?,?,?,?,'delivery')",
+            (fname, lname, mname, username, password, phone_number),
+        )
+        db.commit()
+        return redirect(url_for('admin.dashboard'))
+    return render_template('admin/add_worker.html')
+
+@bp.route('/remove_worker/<int:worker_id>', methods=['POST', 'GET'])
+@login_required
+@account_type_required('admin')
+def remove_worker(worker_id):
+    db = get_db()
+    db.execute(
+        "DELETE FROM users WHERE id = ?",
+        (worker_id,)
+    )
+    db.execute(
+        "DELETE FROM deliveries WHERE worker_id = ?",
+        (worker_id,)
+    )
+    db.commit()
+    return redirect(url_for('admin.dashboard'))
