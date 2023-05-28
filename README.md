@@ -1,12 +1,15 @@
 ﻿# 2BiG-IM102
 
+
 ## How to run
-First, initialize the SQLITE database
+First, Open Pycharm then clone or download this repository
+
+Second, initialize the SQLITE database
 ```
 flask --app flaskr init-db
 ```
 
-Second, run Flask
+Third, run Flask
 ```
 flask --app flaskr --debug run
 ```
